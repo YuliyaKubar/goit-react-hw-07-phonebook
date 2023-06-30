@@ -1,18 +1,27 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts } from 'redux/contacts/selectors';
+import { getContacts, getError } from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
-import { deleteContact } from 'redux/contacts/contactSlice';
+import { fetchDeleteContact } from 'redux/contacts/operations';
+import { toast } from 'react-toastify';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  const error = useSelector(getError);
   const filter = useSelector(getFilter);
-  console.log(filter);
+
   const filterName = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+  if (error) {
+    toast.error(error);
+  }
+  const handleDelete = id =>
+    dispatch(fetchDeleteContact(id)).then(data => {
+      if (!data.error) toast.success('Contact was delete');
+    });
 
   return (
     <ul>
@@ -24,7 +33,7 @@ export const ContactList = () => {
           <button
             className={css.delete}
             type="button"
-            onClick={() => dispatch(deleteContact(contact.id))}
+            onClick={() => handleDelete(contact.id)}
           >
             Delete
           </button>

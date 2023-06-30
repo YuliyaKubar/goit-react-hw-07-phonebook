@@ -1,14 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { initialStateContacts } from './initialState';
-import { reducersContacts } from './reducers';
+import { extraReducersContacts } from './reducers';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState: initialStateContacts,
-  reducers: reducersContacts,
+  extraReducers: extraReducersContacts,
 });
-
-// Action creators are generated for each case reducer function
-export const { deleteContact, addContact } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

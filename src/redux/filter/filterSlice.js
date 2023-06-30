@@ -8,7 +8,6 @@ export const filterSlice = createSlice({
   reducers: reducersFilter,
 });
 
-// Action creators are generated for each case reducer function
 export const { changeFilter } = filterSlice.actions;
 
 export default filterSlice.reducer;
